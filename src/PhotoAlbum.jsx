@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {Camera,ChevronLeft,ChevronRight,ImagePlus,Trash2,Check,Upload, X,Image as ImageIcon} from 'lucide-react';
-import {normalizePhotos,appendPhoto,removePhoto,changeCaption,newPhoto} from './photoAlbum';
+import {normalizePhotos,appendPhoto,removePhoto,changeCaption,newPhoto,setPhotoFolder,setPhotoVisibility,photoFolders} from './photoAlbum';
 import './photo-album.css';
 
 function GalleryLightbox({photos,index,onClose,onNavigate}){
@@ -26,6 +26,9 @@ function GalleryLightbox({photos,index,onClose,onNavigate}){
 /** Controlled editor/viewer. Parent persists the album together with its person/tree. */
 export default function PhotoAlbum({photos=[],onChange,onUpload,editable=false,title='Фотогалерея',description='',featuredSrc='',onSetFeatured,featuredLabel='Сделать главным фото',max=15,compact=false}){
   const pictures=normalizePhotos(photos);
+  const [folder,setFolder]=useState('Все снимки');const [newFolder,setNewFolder]=useState('');
+  const folders=photoFolders(pictures);
+  const visiblePictures=pictures.filter(p=>folder==='Все снимки'||p.folder===folder);
   const [busy,setBusy]=useState(false),[error,setError]=useState(''),[lightbox,setLightbox]=useState(null);
   const [progress,setProgress]=useState('');
   useEffect(()=>{if(lightbox!==null&&lightbox>=pictures.length)setLightbox(pictures.length?pictures.length-1:null)},[pictures.length,lightbox]);
@@ -41,7 +44,7 @@ export default function PhotoAlbum({photos=[],onChange,onUpload,editable=false,t
       for(const file of files){
         setProgress(`Загрузка ${succeeded+1} из ${files.length}...`);
         const src=await onUpload(file);
-        next=appendPhoto(next,newPhoto(src),max);
+        next=appendPhoto(next,newPhoto(src,folder),max);
         succeeded++;
       }
       onChange(next);
@@ -54,12 +57,14 @@ export default function PhotoAlbum({photos=[],onChange,onUpload,editable=false,t
     <div className="photo-album-heading"><div className="photo-album-heading-icon"><Camera size={19}/></div><div><h3>{title} <span className="photo-album-count">{pictures.length}</span></h3>{description&&<p>{description}</p>}</div></div>
     {editable&&<label className={`album-upload ${busy||pictures.length>=max?'album-upload-disabled':''}`}><ImagePlus size={21}/><div><b>{busy?progress:'Добавить фотографии'}</b><small>{`JPG, PNG или WEBP · ${pictures.length} из ${max}`}</small></div><Upload size={18}/><input disabled={busy||pictures.length>=max} type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={addFiles}/></label>}
     {error&&<div className="photo-album-error" role="alert">{error}</div>}
-    {pictures.length?<div className="album-photos-grid">{pictures.map((p,i)=><div className="album-photo" key={p.id}>
-      <button type="button" className="album-photo-preview" onClick={()=>setLightbox(i)} aria-label={`Открыть фото ${i+1}`}><img loading="lazy" src={p.src} alt={p.caption||`Фото ${i+1}`}/><span className="album-photo-zoom"><ImageIcon size={18}/></span></button>
+    {pictures.length>0&&<div className="album-folderbar"><div className="album-folder-tabs">{folders.map(f=><button type="button" key={f} className={folder===f?'selected':''} onClick={()=>setFolder(f)}>{f}</button>)}</div>{editable&&<div className="album-new-folder"><input value={newFolder} maxLength={60} placeholder="Новый альбом…" onChange={e=>setNewFolder(e.target.value)}/><button type="button" disabled={!newFolder.trim()} onClick={()=>{setFolder(newFolder.trim());setNewFolder('')}}>Создать</button></div>}</div>}
+    {pictures.length?<div className="album-photos-grid">{visiblePictures.map((p,i)=><div className="album-photo" key={p.id}>
+      <button type="button" className="album-photo-preview" onClick={()=>setLightbox(pictures.findIndex(x=>x.id===p.id))} aria-label={`Открыть фото ${i+1}`}><img loading="lazy" src={p.src} alt={p.caption||`Фото ${i+1}`}/><span className="album-photo-zoom"><ImageIcon size={18}/></span></button>
       {editable?<div className="album-photo-foot"><input type="text" maxLength={220} value={p.caption} onChange={e=>onChange(changeCaption(pictures,p.id,e.target.value))} placeholder="Подпись к моменту…" aria-label="Подпись к фото"/>
+        <div className="album-photo-extra"><label>Альбом<select value={p.folder} onChange={e=>onChange(setPhotoFolder(pictures,p.id,e.target.value))}>{[...new Set([...folders,p.folder])].map(f=><option key={f}>{f}</option>)}</select></label><label className="album-private-toggle"><input type="checkbox" checked={p.visibility==='private'} onChange={e=>onChange(setPhotoVisibility(pictures,p.id,e.target.checked?'private':'public'))}/> Личное фото</label></div>
         <div className="album-photo-actions">{onSetFeatured&&<button type="button" className={featuredSrc===p.src?'album-set-cover active':'album-set-cover'} title={featuredLabel} onClick={()=>onSetFeatured(p.src)}>{featuredSrc===p.src?<><Check size={12}/> Главное фото</>:<><Camera size={12}/> {featuredLabel}</>}</button>}<button type="button" className="album-remove" title="Убрать фотографию" onClick={()=>onChange(removePhoto(pictures,p.id))}><Trash2 size={15}/></button></div>
       </div>:p.caption&&<p className="album-view-caption">{p.caption}</p>}
-    </div>)}</div>:<div className="album-empty"><div><Camera size={32}/></div><strong>Здесь будет ваша история в фотографиях</strong><span>{editable?'Загружайте памятные моменты, свадьбы и семейные события.':'В этой галерее пока нет фотографий.'}</span></div>}
+    </div>)}{!visiblePictures.length&&<div className="album-empty">В этом альбоме пока нет фотографий.</div>}</div>:<div className="album-empty"><div><Camera size={32}/></div><strong>Здесь будет ваша история в фотографиях</strong><span>{editable?'Загружайте памятные моменты, свадьбы и семейные события.':'В этой галерее пока нет фотографий.'}</span></div>}
     {lightbox!==null&&pictures.length>0&&<GalleryLightbox photos={pictures} index={Math.min(lightbox,pictures.length-1)} onClose={()=>setLightbox(null)} onNavigate={setLightbox}/>}
   </section>
 }
