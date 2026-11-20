@@ -1,7 +1,15 @@
 import React,{useEffect,useRef,useState} from 'react';
-import {ArrowLeft,ArrowRight,Camera,Check,Heart,ImagePlus,Mars,Plus,ShieldCheck,Sparkles,Upload,Venus,X} from 'lucide-react';
+import {ArrowLeft,ArrowRight,Camera,Check,Heart,ImagePlus,Plus,ShieldCheck,Sparkles,Upload,X} from 'lucide-react';
 import './wizard.css';
 import {simName,validateWizardStep,buildSimFromWizard} from './simWizardModel';
+
+// Gender icons are bundled inline: lucide-react@0.468 does not export Mars/Venus.
+function GenderIcon({gender}){
+  const base={width:23,height:23,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:2,strokeLinecap:'round',strokeLinejoin:'round','aria-hidden':true};
+  return gender==='male'
+    ? <svg {...base}><circle cx="9" cy="15" r="5.5"/><path d="M13 11L21 3M15.5 3H21V8.5"/></svg>
+    : <svg {...base}><circle cx="12" cy="9" r="5.5"/><path d="M12 14.5V22M8 19H16"/></svg>;
+}
 
 const LIFE_STAGES=['Новорождённый','Младенец','Малыш','Ребёнок','Подросток','Молодой взрослый','Взрослый','Пожилой','Умерший'];
 const TITLES=['Кого мы добавляем?','Как зовут вашего сима?','Расскажите о персонаже','Почти готово!'];
@@ -72,11 +80,11 @@ export default function SimCreationWizard({people=[],onSave,onImage,onCancel}){
         {step===0&&<div className="wizard-gender-grid">
           <button type="button" className={`wizard-gender-card wizard-male ${gender==='male'?'picked':''}`} onClick={()=>pickGender('male')} aria-label="Выбрать мужчину">
             <span className="wizard-portrait-art"><span className="wizard-art-glow"/><span className="wizard-art-body"/><span className="wizard-art-neck"/><span className="wizard-art-head"/><span className="wizard-art-hair"/><span className="wizard-art-shoulder"/></span>
-            <span className="wizard-card-foot"><span className="wizard-card-caption"><strong>Мужчина</strong><small>Создать сима</small></span><span className="wizard-card-icon"><Mars size={23}/></span></span>
+            <span className="wizard-card-foot"><span className="wizard-card-caption"><strong>Мужчина</strong><small>Создать сима</small></span><span className="wizard-card-icon"><GenderIcon gender="male"/></span></span>
           </button>
           <button type="button" className={`wizard-gender-card wizard-female ${gender==='female'?'picked':''}`} onClick={()=>pickGender('female')} aria-label="Выбрать женщину">
             <span className="wizard-portrait-art"><span className="wizard-art-glow"/><span className="wizard-art-body"/><span className="wizard-art-neck"/><span className="wizard-art-head"/><span className="wizard-art-hair"/><span className="wizard-art-shoulder"/></span>
-            <span className="wizard-card-foot"><span className="wizard-card-caption"><strong>Женщина</strong><small>Создать симку</small></span><span className="wizard-card-icon"><Venus size={23}/></span></span>
+            <span className="wizard-card-foot"><span className="wizard-card-caption"><strong>Женщина</strong><small>Создать симку</small></span><span className="wizard-card-icon"><GenderIcon gender="female"/></span></span>
           </button>
           <div className="wizard-gender-note"><ShieldCheck size={14}/> После создания любой параметр можно изменить в карточке персонажа.</div>
         </div>}
