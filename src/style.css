@@ -129,3 +129,30 @@
 .relation-preview-kind{background:#fff;border:1px solid #cfdfd1;border-radius:99px;padding:5px 9px;font-weight:800;color:#447451}
 .modal.modal-wide:not(.modal-profile){max-width:710px}
 .modal.modal-wide:not(.modal-profile) .relationship-manager{margin-bottom:22px}
+
+
+.sim-node.connected{box-shadow:0 0 0 3px #cfe8d35c,0 16px 36px #35644328}
+.sim-node.spotlight{border-color:var(--node-accent,#78a98a);box-shadow:0 0 0 4px #9cd5a55c,0 18px 38px #35644340;translate:0 -5px}
+.sim-node.dimmed{opacity:.42;filter:saturate(.72)}
+.edge-line{stroke-width:3.3;filter:drop-shadow(0 2px 5px rgba(35,68,45,.15))}
+.edge-line.edge-romance{stroke-width:3.5}
+.edge-line.edge-social{stroke-width:2.4}
+.edge-line.edge-spotlight{filter:drop-shadow(0 0 8px rgba(68,122,88,.34));stroke-width:4}
+.edge-tag{font-size:10.5px;padding:6px 10px;border-width:1.2px;box-shadow:0 5px 18px #35593b24;max-width:260px}
+.edge-tag-focused{box-shadow:0 10px 24px #285a3d42;border-width:1.6px;transform:translate(-50%,-50%) scale(1.02)}
+.tree-legend{position:absolute;right:20px;top:20px;z-index:6;width:290px;padding:14px 14px 12px;border-radius:18px;background:#fffffff0;border:1px solid #dce8dc;box-shadow:0 18px 42px rgba(35,61,43,.12);backdrop-filter:blur(8px)}
+.tree-legend-title{font-size:13px;font-weight:900;color:#315740;margin-bottom:10px;letter-spacing:.03em;text-transform:uppercase}
+.tree-legend-grid{display:grid;grid-template-columns:1fr;gap:8px}
+.legend-pill{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:14px;border:1px solid #ebf0e9;background:#fcfdfb}
+.legend-pill i{display:block;width:32px;height:10px;border-radius:999px;position:relative;flex-shrink:0;background:#79a987;box-shadow:0 0 0 1px rgba(255,255,255,.55) inset}
+.legend-pill i::after{content:'';position:absolute;right:-2px;top:50%;width:8px;height:8px;border-radius:50%;transform:translateY(-50%);background:inherit}
+.legend-pill div{display:flex;flex-direction:column;min-width:0}
+.legend-pill b{font-size:12px;color:#35503c}
+.legend-pill small{font-size:10px;color:#6f8775;line-height:1.35}
+.legend-romance i{background:#d08aa4}
+.legend-blended i{background:#8a96c3}
+.legend-social i{background:#c1a87e}
+.tree-spotlight-tip{display:flex;align-items:flex-start;gap:8px;margin-top:10px;padding:10px 11px;border-radius:14px;background:linear-gradient(180deg,#f4f9f3,#eef7ec);color:#4c7157;font-size:11px;font-weight:700}
+.tree-spotlight-tip svg{flex-shrink:0;margin-top:1px}
+@media(max-width:1100px){.tree-legend{width:250px;right:14px;top:14px}}
+@media(max-width:780px){.tree-legend{position:static;width:auto;margin:0 0 12px}.canvas-area{display:flex;flex-direction:column}.canvas-world{order:2}.tree-legend{order:1}.tree-spotlight-tip{font-size:10px}.edge-tag{max-width:160px;font-size:9px}}
