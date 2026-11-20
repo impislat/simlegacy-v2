@@ -178,3 +178,57 @@
 .edge-tag-focused{transform:translate(-50%,-50%) scale(1.04);box-shadow:0 12px 28px rgba(40,90,61,.26)}
 .canvas-hint{font-weight:700;color:#54705b;border:1px solid #dde8dd;box-shadow:0 10px 24px rgba(52,76,61,.08)}
 @media(max-width:780px){.sim-node .node-open{right:39px}.edge-tag>span{max-width:90px}}
+
+/* SimLegacy 2.4 — personal memories, dynasty photo journals and memorial states */
+.modal-album{max-width:880px;padding:30px;overflow:auto;max-height:min(92vh,1000px);border:1px solid #e2e9de;border-radius:24px}
+.modal-album .modal-x{z-index:3}
+.album-tab{padding:1px 0 6px;max-width:100%}
+.profile-tabs{overflow-x:auto;scrollbar-width:thin;scrollbar-color:#d6e5d4 transparent}
+.profile-tabs button{flex-shrink:0}
+.photo-album-tab{min-height:350px}
+.inspector-album{margin:26px 0 20px;padding-top:24px;border-top:1px solid #ecf1e9}
+.life-status-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;font-weight:800;font-size:11px;line-height:1;white-space:nowrap;margin:5px 0 8px}
+.life-status-chip.alive{background:#ecf6eb;color:#4b9166;border:1px solid #d8ecda}
+.life-status-chip.deceased{background:#eff0f1;color:#69737c;border:1px solid #dde1e3}
+.avatar-deceased img{filter:grayscale(1) contrast(.95);opacity:.8}
+.avatar-deceased:not(:has(img)){filter:grayscale(1)}
+.sim-node.sim-deceased{background:linear-gradient(165deg,#fafbfa,#f1f2f1);border-color:#cfd5d1;color:#66736d;box-shadow:0 7px 23px #56645a1d}
+.sim-node.sim-deceased .avatar.card{filter:grayscale(1);opacity:.8}
+.sim-node.sim-deceased .node-body b{color:#69726e}
+.sim-node.sim-deceased .node-body small{color:#a0a9a4}
+.sim-node.sim-deceased .node-gen{color:#818d84;background:#e5eae6}
+.sim-node.sim-deceased:hover{border-color:#a2b0a7;box-shadow:0 11px 32px #56645a36}
+.node-memorial{position:absolute;left:-13px;top:-13px;z-index:5;display:grid;place-items:center;background:linear-gradient(160deg,#f7f8f7,#e3e7e4);color:#66746d;border-radius:13px;width:32px;height:32px;border:2px solid white;box-shadow:0 5px 13px #4251453c}
+.node-memorial:after{content:'';position:absolute;bottom:-1px;left:10px;height:2px;width:11px;border-radius:3px;background:#a3b0a8}
+.memorial-inspector{display:flex;gap:11px;margin:16px 0 18px;border-radius:15px;background:linear-gradient(110deg,#f4f5f4,#eef0ed);border:1px solid #dfe5e0;padding:14px;color:#748078;line-height:1.5}
+.memorial-inspector>svg{flex-shrink:0;margin-top:2px}
+.memorial-inspector>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.memorial-inspector strong{font-size:12px;color:#616e66}
+.memorial-inspector span{font-size:11px;color:#79877e}
+.memorial-inspector small{font-size:11px;color:#879288}
+.status-editor{background:linear-gradient(135deg,#f6faf4,#f8faf8);border:1px solid #e2eae0;border-radius:14px;padding:15px 16px;margin-top:3px}
+.status-editor-label{display:flex;align-items:center;gap:8px;color:#5f7763;font-size:12px;font-weight:850;margin-bottom:12px}
+.status-choices{display:flex;gap:9px}
+.status-choices button{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:1px solid #e1e8df;border-radius:10px;padding:11px;color:#819084;font-size:12px;font-weight:800;transition:background .15s,border-color .15s,color .15s,box-shadow .15s}
+.status-choices button.active.alive{color:#397f52;border-color:#86bf91;background:#e9f6e8;box-shadow:0 0 0 2px #a1cfa32e}
+.status-choices button.active.deceased{color:#626f76;border-color:#a9b5ba;background:#ebeff1;box-shadow:0 0 0 2px #aab4bb33}
+.death-fields{margin-top:15px;display:grid;gap:12px;grid-template-columns:1fr}
+.death-fields label{font-size:11px!important}
+.dynasty-album-placeholder{display:grid;place-items:center;color:#60906e;border:1px solid #bfd8c5}
+.dynasty-gallery-modal{padding-right:3px}
+.dynasty-gallery-modal .modal-eyebrow{margin-bottom:14px}
+.dynasty-gallery-modal .photo-album{margin-top:14px}
+.modal-gallery-note{font-size:11px;color:#91a397}
+@media(max-width:640px){.modal-album{max-width:100%;padding:18px 15px;border-radius:18px}.photo-album .album-photos-grid{gap:8px}.status-editor{padding:13px}.node-memorial{width:27px;height:27px;left:-9px;top:-9px}.modal-profile .profile-tabs{gap:0}}
+
+/* Optional screenshot-like cinematic setting; no background change for existing trees. */
+.canvas-cinematic{background:#bdc9b9!important}
+.canvas-backdrop-photo{position:absolute;inset:-28px;pointer-events:none;background-position:center;background-size:cover;filter:blur(11px) saturate(.83) brightness(.8);opacity:.76;z-index:0}
+.canvas-cinematic:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#f3f7ed16,#f7f8f120);z-index:0}
+.canvas-cinematic .canvas-world{z-index:1}
+.canvas-cinematic .tree-legend{background:#fffffff2}
+.cinematic-check{display:flex!important;flex-direction:row!important;align-items:center;gap:12px!important;cursor:pointer;border:1px solid #dce9dc;border-radius:13px;padding:13px;background:#f6faf5}
+.cinematic-check input{width:20px;height:20px;accent-color:#579969;flex-shrink:0}
+.cinematic-check span{display:flex;flex-direction:column;gap:4px}
+.cinematic-check strong{font-size:12px;color:#3d654a}
+.cinematic-check small{font-size:10px;color:#83988a;font-weight:500;line-height:1.4}

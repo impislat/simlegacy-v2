@@ -6,4 +6,4 @@ export const demoPeople=[
 {id:'s5',name:'Мия Харт',life:'Ребёнок',gen:3,role:'',bio:'Новая глава семейной истории.',x:270,y:650,photo:'',parents:['s3','s4'],partner:''}
 ];
 export const uid=()=>crypto.randomUUID();
-export const demoTree=()=>({id:'demo',owner_id:null,title:'Семья Харт',description:'Три поколения любви, открытий и новых возможностей',cover:'',public:false,created_at:new Date().toISOString(),people:demoPeople});
+export const demoTree=()=>({id:'demo',owner_id:null,title:'Семья Харт',description:'Три поколения любви, открытий и новых возможностей',cover:'',gallery:[],backgroundEnabled:false,public:false,created_at:new Date().toISOString(),people:demoPeople});

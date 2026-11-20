@@ -6,11 +6,15 @@ create table if not exists public.trees (
  title text not null check (char_length(title) between 1 and 100),
  description text not null default '',
  cover text not null default '',
+ gallery jsonb not null default '[]'::jsonb,
+ background_enabled boolean not null default false,
  people jsonb not null default '[]'::jsonb,
  public boolean not null default false,
  created_at timestamptz not null default now(),
  updated_at timestamptz not null default now()
 );
+alter table public.trees add column if not exists gallery jsonb not null default '[]'::jsonb;
+alter table public.trees add column if not exists background_enabled boolean not null default false;
 create index if not exists trees_owner_idx on public.trees(owner_id);
 create index if not exists trees_gallery_idx on public.trees(updated_at desc) where public=true;
 alter table public.trees enable row level security;
