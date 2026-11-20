@@ -1,0 +1,10 @@
+import {createClient} from '@supabase/supabase-js';
+const url=import.meta.env.VITE_SUPABASE_URL,key=import.meta.env.VITE_SUPABASE_ANON_KEY;
+export const configured=Boolean(url&&key&&url.includes('supabase.co')&&!url.includes('YOUR_'));
+export const db=configured?createClient(url,key):null;
+export async function getTrees(userId){const {data,error}=await db.from('trees').select('*').eq('owner_id',userId).order('updated_at',{ascending:false});if(error)throw error;return data.map(t=>({...t,people:t.people||[]}));}
+export async function saveTree(tree,userId){const {data,error}=await db.from('trees').upsert({id:tree.id,owner_id:userId,title:tree.title,description:tree.description||'',cover:tree.cover||'',people:tree.people,public:!!tree.public,updated_at:new Date().toISOString()}).select().single();if(error)throw error;return data;}
+export async function removeTree(id){const {error}=await db.from('trees').delete().eq('id',id);if(error)throw error;}
+export async function listGallery(){const {data,error}=await db.from('trees').select('id,title,description,cover,people,created_at,owner_id').eq('public',true).order('updated_at',{ascending:false}).limit(100);if(error)throw error;return data;}
+export async function getPublicTree(id){const {data,error}=await db.from('trees').select('*').eq('id',id).eq('public',true).single();if(error)throw error;return data;}
+export async function uploadPhoto(file,userId){if(!file.type.startsWith('image/'))throw Error('Выберите изображение');if(file.size>8*1024*1024)throw Error('Файл должен быть не больше 8 МБ');const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');const path=`${userId}/${crypto.randomUUID()}.${ext}`;const {error}=await db.storage.from('sim-images').upload(path,file,{upsert:false,contentType:file.type});if(error)throw error;return db.storage.from('sim-images').getPublicUrl(path).data.publicUrl;}
