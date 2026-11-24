@@ -18,6 +18,7 @@ alter table public.trees add column if not exists background_enabled boolean not
 alter table public.trees add column if not exists style jsonb not null default '{}'::jsonb;
 alter table public.trees add column if not exists layout_mode text not null default 'manual';
 alter table public.trees add column if not exists heir_id text;
+alter table public.trees add column if not exists chronicles jsonb not null default '[]'::jsonb;
 create index if not exists trees_owner_idx on public.trees(owner_id);
 alter table public.trees enable row level security;
 -- IMPORTANT: legacy public-read policy exposes private entries. Remove it and use public snapshots instead.
