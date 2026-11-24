@@ -1,6 +1,6 @@
 import {createClient} from '@supabase/supabase-js';
 import {sanitizePublicTree} from './featureModel';
-const url=import.meta.env.VITE_SUPABASE_URL,key=import.meta.env.VITE_SUPABASE_ANON_KEY;
+const url=import.meta.env.VITE_SUPABASE_URL||'https://swxfdqnslmmkswwxpnji.supabase.co',key=import.meta.env.VITE_SUPABASE_ANON_KEY||'sb_publishable_7RPER6GbPCajEZT_tBVcCA_aPoVXKBB';
 export const configured=Boolean(url&&key&&url.includes('supabase.co')&&!url.includes('YOUR_'));
 export const db=configured?createClient(url,key):null;
 const fail=({error,data})=>{if(error)throw error;return data};
