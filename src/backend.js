@@ -7,12 +7,12 @@ const fail=({error,data})=>{if(error)throw error;return data};
 const nameFor=(user)=>String(user?.user_metadata?.display_name||user?.email?.split('@')[0]||'Автор').slice(0,64);
 export async function getTrees(userId){
  const data=fail(await db.from('trees').select('*').eq('owner_id',userId).order('updated_at',{ascending:false}));
- return data.map(t=>({...t,people:t.people||[],gallery:t.gallery||[],backgroundEnabled:!!t.background_enabled,style:t.style||{},layoutMode:t.layout_mode||'manual',heirId:t.heir_id||null}));
+ return data.map(t=>({...t,people:t.people||[],gallery:t.gallery||[],backgroundEnabled:!!t.background_enabled,style:t.style||{},layoutMode:t.layout_mode||'manual',heirId:t.heir_id||null,chronicles:t.chronicles||[]}));
 }
 export async function saveTree(tree,userId){
  const data=fail(await db.from('trees').upsert({
   id:tree.id,owner_id:userId,title:tree.title,description:tree.description||'',cover:tree.cover||'',
-  gallery:tree.gallery||[],background_enabled:!!tree.backgroundEnabled,people:tree.people||[],public:!!tree.public,
+  gallery:tree.gallery||[],background_enabled:!!tree.backgroundEnabled,people:tree.people||[],chronicles:tree.chronicles||[],public:!!tree.public,
   style:tree.style||{},layout_mode:tree.layoutMode||'manual',heir_id:tree.heirId||null,updated_at:new Date().toISOString()
  }).select().single());
  if(tree.public){
