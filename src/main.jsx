@@ -1,5 +1,5 @@
 import React,{useEffect,useMemo,useRef,useState} from 'react';import{createRoot}from'react-dom/client';
-import{Snowflake,ArrowLeft,ArrowRight,ArrowUpRight,Camera,Check,ChevronDown,ChevronLeft,ChevronRight,Download,Edit3,Eye,EyeOff,Filter,Globe,Heart,Image as ImageIcon,LayoutGrid,Link2,LogIn,LogOut,Maximize,Menu,Minus,MoreHorizontal,Plus,Search,Settings,Share2,Sparkles,Trash2,Upload,User,Users,Webcam,X,ZoomIn,ZoomOut,HeartHandshake,HeartCrack,GitBranch,ArrowLeftRight,PenLine,UserRound,MapPin,CalendarDays,Move,Info}from'lucide-react';
+import{ArrowLeft,ArrowRight,ArrowUpRight,Camera,Check,ChevronDown,ChevronLeft,ChevronRight,Download,Edit3,Eye,EyeOff,Filter,Globe,Heart,Image as ImageIcon,LayoutGrid,Link2,LogIn,LogOut,Maximize,Menu,Minus,MoreHorizontal,Plus,Search,Settings,Share2,Sparkles,Trash2,Upload,User,Users,Webcam,X,ZoomIn,ZoomOut,HeartHandshake,HeartCrack,GitBranch,ArrowLeftRight,PenLine,UserRound,MapPin,CalendarDays,Move,Info}from'lucide-react';
 import{db,configured,getTrees,saveTree,removeTree,listGallery,getPublicTree,uploadPhoto}from'./backend';
 import{autoArrangeTree,visibleTreePeople,descendantIds,treeGenerationStats}from'./treeEngine';
 import{arr,cloneSharedCharacter,syncSharedPerson}from'./featureModel';
