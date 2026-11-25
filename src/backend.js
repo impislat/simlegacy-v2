@@ -105,3 +105,6 @@ export async function addSimComment(postId,user,body){const b=String(body||'').t
 export async function deleteSimComment(id,userId){fail(await db.from('simstagram_comments').delete().eq('id',id).eq('user_id',userId))}
 export async function toggleSimSaved(postId,userId,saved){if(saved)fail(await db.from('simstagram_saved').delete().eq('post_id',postId).eq('user_id',userId));else fail(await db.from('simstagram_saved').upsert({post_id:postId,user_id:userId},{onConflict:'post_id,user_id'}))}
 export async function toggleSimRepost(postId,user){const existing=fail(await db.from('simstagram_reposts').select('id').eq('post_id',postId).eq('user_id',user.id).maybeSingle());if(existing)fail(await db.from('simstagram_reposts').delete().eq('id',existing.id));else fail(await db.from('simstagram_reposts').insert({post_id:postId,user_id:user.id,author_name:simNameFor(user)}))}
+
+export async function getSimActivity(userId){if(!userId)return [];return fail(await db.from('simstagram_activity').select('id,actor_id,actor_name,post_id,kind,preview,seen,created_at').eq('recipient_id',userId).order('created_at',{ascending:false}).limit(100))}
+export async function markSimActivitySeen(userId){fail(await db.from('simstagram_activity').update({seen:true}).eq('recipient_id',userId).eq('seen',false))}
