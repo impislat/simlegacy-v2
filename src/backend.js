@@ -70,3 +70,35 @@ export async function uploadPhoto(file,userId){
 }
 
 export async function getPublicProfile(userId){const {data,error}=await db.from('profiles').select('id,username,bio,avatar').eq('id',userId).maybeSingle();if(error)throw error;return data;}
+
+const simNameFor=user=>String(user?.user_metadata?.display_name||user?.email?.split('@')[0]||'Автор').slice(0,64);
+export async function listSimPosts(userId){
+ const posts=fail(await db.from('simstagram_posts').select('*').order('created_at',{ascending:false}).limit(150));
+ if(!posts.length)return [];
+ const ids=posts.map(p=>p.id);
+ const [likes,comments,reposts,saved]=await Promise.all([
+  db.from('simstagram_likes').select('post_id,user_id').in('post_id',ids),
+  db.from('simstagram_comments').select('post_id').in('post_id',ids),
+  db.from('simstagram_reposts').select('post_id,user_id,author_name').in('post_id',ids),
+  userId?db.from('simstagram_saved').select('post_id').eq('user_id',userId).in('post_id',ids):Promise.resolve({data:[],error:null})
+ ]);
+ for(const q of [likes,comments,reposts,saved])if(q.error)throw q.error;
+ const count=(rows,key)=>rows.reduce((m,x)=>(m[x[key]]=(m[x[key]]||0)+1,m),{});
+ const lm=count(likes.data||[],'post_id'),cm=count(comments.data||[],'post_id'),rm=count(reposts.data||[],'post_id');
+ return posts.map(p=>({...p,likes:lm[p.id]||0,comments:cm[p.id]||0,reposts:rm[p.id]||0,liked:!!userId&&(likes.data||[]).some(x=>x.post_id===p.id&&x.user_id===userId),saved:!!userId&&(saved.data||[]).some(x=>x.post_id===p.id),reposted:!!userId&&(reposts.data||[]).some(x=>x.post_id===p.id&&x.user_id===userId)}));
+}
+export async function createSimPost(user,post){
+ const caption=String(post.caption||'').slice(0,2200),tags=(post.tags||[]).map(t=>String(t).replace(/^#/,'').slice(0,40)).filter(Boolean).slice(0,20);
+ if(!post.images?.length||post.images.length>10)throw Error('Добавь от 1 до 10 фото');
+ return fail(await db.from('simstagram_posts').insert({user_id:user.id,author_name:simNameFor(user),caption,images:post.images,tree_id:post.tree_id||null,tree_title:post.tree_title||'',category:post.category||'Жизнь',tags}).select().single());
+}
+export async function editSimPost(id,post){
+ return fail(await db.from('simstagram_posts').update({caption:String(post.caption||'').slice(0,2200),images:post.images||[],category:post.category||'Жизнь',tree_id:post.tree_id||null,tree_title:post.tree_title||'',tags:(post.tags||[]).map(t=>String(t).replace(/^#/,'').slice(0,40)).filter(Boolean).slice(0,20),updated_at:new Date().toISOString()}).eq('id',id).select().single());
+}
+export async function deleteSimPost(id,userId){fail(await db.from('simstagram_posts').delete().eq('id',id).eq('user_id',userId))}
+export async function toggleSimLike(postId,userId,liked){if(liked)fail(await db.from('simstagram_likes').delete().eq('post_id',postId).eq('user_id',userId));else fail(await db.from('simstagram_likes').upsert({post_id:postId,user_id:userId},{onConflict:'post_id,user_id'}))}
+export async function getSimComments(postId){return fail(await db.from('simstagram_comments').select('*').eq('post_id',postId).order('created_at',{ascending:true}).limit(100))}
+export async function addSimComment(postId,user,body){const b=String(body||'').trim();if(!b||b.length>1000)throw Error('Комментарий должен содержать 1–1000 символов');return fail(await db.from('simstagram_comments').insert({post_id:postId,user_id:user.id,author_name:simNameFor(user),body:b}).select().single())}
+export async function deleteSimComment(id,userId){fail(await db.from('simstagram_comments').delete().eq('id',id).eq('user_id',userId))}
+export async function toggleSimSaved(postId,userId,saved){if(saved)fail(await db.from('simstagram_saved').delete().eq('post_id',postId).eq('user_id',userId));else fail(await db.from('simstagram_saved').upsert({post_id:postId,user_id:userId},{onConflict:'post_id,user_id'}))}
+export async function toggleSimRepost(postId,user){const existing=fail(await db.from('simstagram_reposts').select('id').eq('post_id',postId).eq('user_id',user.id).maybeSingle());if(existing)fail(await db.from('simstagram_reposts').delete().eq('id',existing.id));else fail(await db.from('simstagram_reposts').insert({post_id:postId,user_id:user.id,author_name:simNameFor(user)}))}
