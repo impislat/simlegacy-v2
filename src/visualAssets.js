@@ -1,9 +1,8 @@
-/** Editorial photography for visual decoration only. Never used as user-uploaded Sim photos. */
-const unsplash = (id, width, height) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&h=${height}&q=82`;
+/** The Sims 4 gameplay screenshots used as decorative editorial imagery only. User-uploaded Sim photos always remain separate. */
 export const VISUALS = Object.freeze({
-  sky: unsplash('photo-1763257708417-1bbffa6a81c2',1600,900),
-  lavender: unsplash('photo-1673423050916-5a3532845548',1400,900),
-  flowers: unsplash('photo-1752065134210-b4d18d9285c3',850,950),
-  burano: unsplash('photo-1711247153065-e3cc0a64bdf4',850,750),
-  autumn: unsplash('photo-1697836748445-b5cb113679c5',1200,800),
+  sky: 'https://cdn.akamai.steamstatic.com/steam/apps/1904392/ss_6f097d4cf93bb4328e20085f92b368fa67a3ba2e.1920x1080.jpg?t=1677246540',
+  lavender: 'https://image.thenerdstash.com/2023/03/The-Sims-4-Trailer-Family-Screenshot-Feature-1024x576.jpg',
+  flowers: 'https://www.simtimes.de/bilder/2025/04/diesims4-kuechen-allerlei-set-02.jpeg',
+  burano: 'https://img.redbull.com/images/c_crop%2Cw_1920%2Ch_960%2Cx_0%2Cy_0%2Cf_auto%2Cq_auto/c_scale%2Cw_1200/redbullcom/2017/11/14/4c95fbee-1e46-497a-b4bd-85f9397a67a6/the-sims-4-ps4-xbox-one',
+  autumn: 'https://www.next-stage.fr/2017/01/les-sims-4-les-bambins-maintenant-disponibles-gratuitement.html/toddlers-1',
 });
