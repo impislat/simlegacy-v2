@@ -79,13 +79,16 @@ export async function listSimPosts(userId){
  const [likes,comments,reposts,saved]=await Promise.all([
   db.from('simstagram_likes').select('post_id,user_id').in('post_id',ids),
   db.from('simstagram_comments').select('post_id').in('post_id',ids),
-  db.from('simstagram_reposts').select('post_id,user_id,author_name').in('post_id',ids),
+  db.from('simstagram_reposts').select('post_id,user_id,author_name,created_at').in('post_id',ids).order('created_at',{ascending:false}),
   userId?db.from('simstagram_saved').select('post_id').eq('user_id',userId).in('post_id',ids):Promise.resolve({data:[],error:null})
  ]);
  for(const q of [likes,comments,reposts,saved])if(q.error)throw q.error;
  const count=(rows,key)=>rows.reduce((m,x)=>(m[x[key]]=(m[x[key]]||0)+1,m),{});
  const lm=count(likes.data||[],'post_id'),cm=count(comments.data||[],'post_id'),rm=count(reposts.data||[],'post_id');
- return posts.map(p=>({...p,likes:lm[p.id]||0,comments:cm[p.id]||0,reposts:rm[p.id]||0,liked:!!userId&&(likes.data||[]).some(x=>x.post_id===p.id&&x.user_id===userId),saved:!!userId&&(saved.data||[]).some(x=>x.post_id===p.id),reposted:!!userId&&(reposts.data||[]).some(x=>x.post_id===p.id&&x.user_id===userId)}));
+ const enriched=posts.map(p=>({...p,likes:lm[p.id]||0,comments:cm[p.id]||0,reposts:rm[p.id]||0,liked:!!userId&&(likes.data||[]).some(x=>x.post_id===p.id&&x.user_id===userId),saved:!!userId&&(saved.data||[]).some(x=>x.post_id===p.id),reposted:!!userId&&(reposts.data||[]).some(x=>x.post_id===p.id&&x.user_id===userId)}));
+ const byId=new Map(enriched.map(p=>[p.id,p]));
+ const copies=(reposts.data||[]).filter(r=>userId===r.user_id).map(r=>({...byId.get(r.post_id),feed_type:'repost',repost_user_id:r.user_id,repost_author_name:r.author_name,repost_created_at:r.created_at})).filter(Boolean);
+ return [...enriched,...copies].sort((a,b)=>Date.parse(b.repost_created_at||b.created_at)-Date.parse(a.repost_created_at||a.created_at));
 }
 export async function createSimPost(user,post){
  const caption=String(post.caption||'').slice(0,2200),tags=(post.tags||[]).map(t=>String(t).replace(/^#/,'').slice(0,40)).filter(Boolean).slice(0,20);
