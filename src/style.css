@@ -238,3 +238,36 @@
 @media(max-width:850px){.canvas-top{align-items:flex-start}.canvas-filters{justify-content:flex-start}.canvas-filters select{max-width:148px}.modal:has(.book-modal){max-height:94vh;overflow:auto;padding:13px}}
 .canvas-area .edge-line.edge-heir{stroke:#d7ad56;filter:drop-shadow(0 0 7px #ebc66d66);stroke-width:calc(var(--rel-width,3px) + 1.5px)}.community-gallery-actions{display:flex;gap:8px;flex-wrap:wrap}
 .canvas-no-results{position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);z-index:7;border-radius:18px;background:#ffffffee;border:1px solid #e3eae1;box-shadow:0 12px 35px #324f3621;padding:25px 35px;text-align:center;color:#779780}.canvas-no-results h3{font-size:15px;color:#376046;margin:7px 0}.canvas-no-results p{font-size:11px}.canvas-no-results button{background:#e5f4e6;color:#4e9463;padding:8px 12px;font-size:11px;border-radius:9px;font-weight:800}
+
+/* SimLegacy — interactive Sim life-stage photo timeline */
+.age-story{display:flex;flex-direction:column;gap:18px}
+.age-story-head{display:flex;gap:13px;align-items:flex-start;padding:16px 17px;border:1px solid #dce9dd;border-radius:18px;background:linear-gradient(115deg,#f6faf5,#edf5ee)}
+.age-story-head h3{margin:0 0 5px;font-size:16px;color:#345f42}
+.age-story-head p{margin:0;color:#7c9381;font-size:11px;line-height:1.65}
+.age-story-icon{display:grid;place-items:center;flex-shrink:0;width:40px;height:40px;border-radius:13px;background:#dcecdf;color:#5b9468}
+.age-progress{display:flex;flex-direction:column;gap:8px}
+.age-progress-bar{height:7px;background:#e8efe8;border-radius:999px;overflow:hidden}
+.age-progress-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#77b284,#5d9c71);transition:width .35s ease}
+.age-progress-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#809384}
+.age-progress-meta strong{color:#528261}
+.age-stage-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.age-stage-card{min-width:0;padding:13px;border:1px solid #e3ebe2;border-radius:17px;background:linear-gradient(160deg,#fff,#f8fbf7);display:flex;flex-direction:column;gap:5px;transition:transform .18s,border-color .18s,box-shadow .18s}
+.age-stage-card:hover{transform:translateY(-3px);border-color:#b9d5bc;box-shadow:0 12px 26px #2b593c12}
+.age-stage-card.has-photo{border-color:#c7dec9;background:linear-gradient(160deg,#fff,#f3f9f3)}
+.age-stage-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.age-stage-number{font-size:10px;font-weight:900;letter-spacing:.12em;color:#9cb29d}
+.age-stage-emoji{width:34px;height:34px;display:grid;place-items:center;border-radius:12px;background:#edf5ed;font-size:18px}
+.age-stage-card>strong{font-size:12px;color:#3b6245;line-height:1.35}
+.age-stage-card>small{font-size:10px;color:#91a293;min-height:15px}
+.age-stage-upload{margin-top:8px;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border:1px dashed #c9dccb;border-radius:13px;background:#f5faf5;color:#709779;font-size:10px;font-weight:800;cursor:pointer;transition:background .15s,border-color .15s}
+.age-stage-upload:hover{background:#ebf5eb;border-color:#85b38a}
+.age-stage-upload input,.age-stage-replace input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.age-stage-photo-wrap{position:relative;margin-top:8px;aspect-ratio:1/1;border-radius:13px;overflow:hidden;background:#edf4ed}
+.age-stage-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.age-stage-card:hover .age-stage-photo-wrap img{transform:scale(1.035)}
+.age-photo-remove{position:absolute;top:8px;right:8px;width:29px;height:29px;border-radius:9px;border:1px solid #ffffff8c;background:#ffffffed;color:#b56d6d;display:grid;place-items:center;cursor:pointer}
+.age-stage-replace{display:flex;justify-content:center;position:relative;padding:8px 4px 1px;font-size:10px;color:#77917b;font-weight:800;cursor:pointer}
+.age-story-tip{display:flex;gap:8px;align-items:flex-start;padding:12px 14px;border-radius:13px;background:#f7faf7;color:#7b9280;border:1px solid #e4ede4;font-size:10px;line-height:1.55}
+.age-story-tip svg{flex-shrink:0;margin-top:1px}
+@media(max-width:800px){.age-stage-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-tab-content{padding:20px 18px}}
+@media(max-width:460px){.age-stage-grid{grid-template-columns:1fr 1fr;gap:8px}.age-stage-card{padding:10px}.age-stage-card>strong{font-size:11px}.age-stage-upload{min-height:76px}}
