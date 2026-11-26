@@ -373,7 +373,9 @@
 
 /* Full-screen family tree workspace */
 .tree-fullscreen{position:fixed!important;inset:0!important;z-index:2147483000!important;width:100vw!important;height:100dvh!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;overflow:hidden!important;background:#f8faf6!important;box-shadow:none!important}
+.tree-mode-fullscreen>.topbar{display:none!important}
 .tree-fullscreen>.sidebar{display:none!important}
+.tree-fullscreen>.editor-main>.editor-toolbar,.tree-fullscreen .canvas-top{display:none!important}
 .tree-fullscreen>.editor-main{display:flex!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;border:0!important;border-radius:0!important;overflow:hidden!important}
 .tree-fullscreen .editor-toolbar{width:100%;flex:0 0 85px}
 .tree-fullscreen .canvas-area{flex:1 1 auto;min-height:0;width:100%;border-radius:0!important}
