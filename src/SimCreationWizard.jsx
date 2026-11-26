@@ -94,7 +94,7 @@ export default function SimCreationWizard({people=[],onSave,onImage,onCancel}){
         </div>}
         {step===2&&<div className="wizard-details">
           <div className="wizard-details-label">ЖИЗНЕННЫЙ ЭТАП</div><div className="wizard-age-grid">{LIFE_STAGES.map(item=><button type="button" key={item} className={`wizard-age ${life===item?'active':''}`} onClick={()=>setLife(item)} aria-pressed={life===item}>{item}{life===item&&<Check size={13}/>}</button>)}</div>
-          <div className="wizard-info-grid"><label>Поколение<select value={gen} onChange={e=>setGen(e.target.value)}>{Array.from({length:Math.max(8,Number(gen)||1)},(_,i)=><option value={i+1} key={i}>Поколение {i+1}</option>)}</select></label><label>Роль в династии<input value={role} maxLength={75} onChange={e=>setRole(e.target.value)} placeholder="Например, наследник"/></label></div>
+          <div className="wizard-info-grid"><label>Поколение<input type="number" min="1" max="9999" value={gen} onChange={e=>setGen(Math.max(1,Math.min(9999,Number(e.target.value)||1)))}/></label><label>Роль в династии<input value={role} maxLength={75} onChange={e=>setRole(e.target.value)} placeholder="Например, наследник"/></label></div>
           <p className="wizard-detail-tip"><Sparkles size={14}/> Позже можно добавить родителей, партнёра, братьев, сестёр и другие связи.</p>
         </div>}
         {step===3&&<div className="wizard-final">
