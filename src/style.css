@@ -372,10 +372,11 @@
 @media(max-width:760px){.brand{width:150px;height:44px}}
 
 /* Full-screen family tree workspace */
-.tree-fullscreen{position:fixed!important;inset:18px!important;z-index:1000!important;width:auto!important;height:auto!important;min-height:0!important;background:#f8faf6!important;border:1px solid rgba(220,232,216,.9)!important;border-radius:28px!important;overflow:hidden!important;box-shadow:0 28px 100px rgba(25,43,30,.32),0 0 0 100vmax rgba(24,39,28,.42)!important}
-.tree-fullscreen .sidebar{height:100%;overflow:auto;border-radius:27px 0 0 27px}
-.tree-fullscreen .editor-main{height:100%;min-height:0;min-width:0;overflow:hidden;border-radius:0 27px 27px 0}
-.tree-fullscreen .canvas-area{flex:1;min-height:0;border-radius:0 0 26px 0}
+.tree-fullscreen{position:fixed!important;inset:0!important;z-index:2147483000!important;width:100vw!important;height:100dvh!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;overflow:hidden!important;background:#f8faf6!important;box-shadow:none!important}
+.tree-fullscreen>.sidebar{display:none!important}
+.tree-fullscreen>.editor-main{display:flex!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;border:0!important;border-radius:0!important;overflow:hidden!important}
+.tree-fullscreen .editor-toolbar{width:100%;flex:0 0 85px}
+.tree-fullscreen .canvas-area{flex:1 1 auto;min-height:0;width:100%;border-radius:0!important}
 .tree-fullscreen-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex-shrink:0;padding:9px 12px;border:1px solid #dce8da;border-radius:11px;background:#f4f8f1;color:#456e4e;font-size:11px;font-weight:800;white-space:nowrap}
 .tree-fullscreen-toggle:hover{background:#eaf3e7;border-color:#bcd4bb}
 .dynasty-card-wrap{position:relative;min-width:0}
