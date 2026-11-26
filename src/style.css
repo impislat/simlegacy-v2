@@ -347,3 +347,21 @@
 .sim-profile-gallery .inspector-album{background:#fff;border:1px solid #e9eee7;border-radius:13px;padding:11px}
 @media(max-width:900px){.inspector.sim-profile-panel{width:290px;max-width:42vw}}
 @media(max-width:650px){.inspector.sim-profile-panel{position:absolute;z-index:35;right:0;top:0;bottom:0;width:min(360px,92vw);max-width:92vw;box-shadow:-18px 0 50px #263b2b24}}
+
+/* Layout correction: keep the portrait in normal flow; prevent decorative layers covering the profile */
+.inspector.sim-profile-panel{box-sizing:border-box;overflow-x:hidden;overflow-y:auto;isolation:isolate}
+.inspector.sim-profile-panel *{box-sizing:border-box}
+.sim-profile-hero{height:150px;min-height:150px;position:relative;display:block;overflow:hidden;isolation:isolate;border-radius:0 0 18px 18px}
+.sim-profile-backdrop{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center 42%;z-index:0!important;display:block}
+.sim-profile-hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(18,35,24,.12),rgba(18,35,24,.58));pointer-events:none}
+.sim-profile-kicker{z-index:2;left:18px;top:18px}
+.sim-profile-avatar{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;z-index:3;width:104px!important;height:104px!important;min-width:104px;min-height:104px;padding:5px;margin:-49px auto 0!important;border-radius:50%;background:#fff;box-shadow:0 5px 22px rgba(35,57,39,.18);overflow:hidden}
+.sim-profile-avatar .avatar.hero{display:grid!important;position:relative!important;inset:auto!important;width:94px!important;height:94px!important;min-width:94px;min-height:94px;margin:0!important;padding:0!important;border:0!important;border-radius:50%!important;overflow:hidden!important;transform:none!important;box-shadow:none!important;background:linear-gradient(145deg,#d5e1d0,#9ebaac)!important}
+.sim-profile-avatar .avatar.hero img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;border-radius:50%!important}
+.sim-profile-avatar .avatar.hero span{font-size:34px!important;color:#fff}
+.sim-profile-main{position:relative;z-index:1;padding:12px 22px 28px!important;min-width:0}
+.sim-profile-name,.sim-profile-subtitle,.sim-profile-generation,.sim-profile-status{position:relative;z-index:1}
+.sim-profile-actions,.sim-profile-section,.sim-profile-memorial{position:relative;z-index:1;min-width:0}
+.sim-profile-primary,.sim-profile-action{box-sizing:border-box;white-space:normal;padding:9px 12px}
+.sim-profile-gallery .inspector-album{max-width:100%;overflow:hidden}
+@media(max-width:900px){.inspector.sim-profile-panel{width:320px;max-width:40vw}}
