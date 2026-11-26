@@ -297,3 +297,13 @@
 .theme-preview-card button{margin-top:7px;padding:9px 13px;border-radius:9px;color:white;border:0;align-self:flex-start;}
 .theme-editor-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:15px;}
 @media(max-width:600px){.theme-editor-grid{grid-template-columns:1fr;}.theme-editor-actions .btn{flex:1;min-width:130px}.theme-dock{gap:5px;padding:6px 7px}.theme-customize{width:25px;height:25px}}
+
+/* Family history inspector visual refresh */
+.inspector-cover-art{height:168px;position:relative;overflow:hidden;border-radius:0 0 24px 24px;background:#dfe8d9;isolation:isolate}
+.inspector-cover-art>img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;filter:saturate(.94);}
+.inspector-cover-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(25,43,31,.05) 20%,rgba(25,43,31,.42) 100%);pointer-events:none}
+.inspector-cover-art .inspector-cover-note{position:absolute;top:14px;left:16px;display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.84);backdrop-filter:blur(8px);color:#355d40;font-size:10px;font-weight:750;letter-spacing:.2px;box-shadow:0 4px 14px rgba(35,58,39,.08)}
+.inspector-cover-caption{position:absolute;left:18px;bottom:16px;color:white;font-family:Manrope,sans-serif;font-size:14px;font-weight:750;letter-spacing:.1px;text-shadow:0 1px 8px rgba(0,0,0,.2)}
+.inspector .avatar.hero{height:124px;width:124px;border:5px solid #fff;margin:-62px auto 0;overflow:hidden;background:#e7eee3;box-shadow:0 9px 28px rgba(38,69,45,.18);z-index:2}
+.inspector .avatar.hero img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.inspector-content{padding:18px 22px 24px}
