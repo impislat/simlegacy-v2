@@ -312,3 +312,38 @@
 @media (min-width: 1100px){.sidebar{width:218px}.inspector{width:264px}.canvas-area{min-height:620px}.canvas-top{padding-left:28px;padding-right:28px}}
 .sim-node{touch-action:none;user-select:none;-webkit-user-select:none}
 .sim-node.dragging{z-index:20;cursor:grabbing;transition:none;box-shadow:0 16px 38px rgba(57,103,65,.24)}
+
+/* New editorial-style character profile */
+.inspector.sim-profile-panel{width:320px;max-width:36vw;flex-shrink:0;background:#fbfcf9;border-left:1px solid #e6ece3;overflow-y:auto;overflow-x:hidden;position:relative;color:#34483a;scrollbar-width:thin;scrollbar-color:#d7e2d4 transparent}
+.sim-profile-hero{height:184px;position:relative;isolation:isolate;background:#dfe9d9}
+.sim-profile-backdrop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.sim-profile-hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,47,32,.12),rgba(23,47,32,.64));z-index:-1}
+.sim-profile-kicker{position:absolute;left:22px;top:21px;color:#fff;font-size:9px;font-weight:800;letter-spacing:1.8px;display:flex;align-items:center;gap:7px;text-shadow:0 1px 8px #233b2b80}
+.sim-profile-close{top:14px;right:14px;width:34px;height:34px;background:rgba(255,255,255,.92);color:#4e6a53;box-shadow:0 3px 14px #243c2a24;backdrop-filter:blur(8px)}
+.sim-profile-avatar{position:absolute;left:50%;bottom:-53px;transform:translateX(-50%);width:116px;height:116px;border-radius:50%;padding:5px;background:#fff;box-shadow:0 8px 28px #263e2a26}
+.sim-profile-avatar .avatar.hero{width:100%;height:100%;margin:0;border:0;box-shadow:none}
+.sim-profile-main{padding:66px 22px 26px}
+.sim-profile-generation{text-align:center;color:#7b9a78;font-size:9px;font-weight:850;letter-spacing:1.8px}
+.sim-profile-name{text-align:center;font-size:23px;line-height:1.2;letter-spacing:-.7px;color:#2e4433;margin:9px 0 5px;overflow-wrap:anywhere}
+.sim-profile-subtitle{text-align:center;color:#849487;font-size:11px;line-height:1.6;margin:0 0 12px}
+.sim-profile-status{display:flex;width:max-content;max-width:100%;align-items:center;gap:6px;margin:0 auto;padding:7px 12px;border-radius:30px;font-size:10px;font-weight:750}
+.sim-profile-actions{display:grid;gap:8px;margin:21px 0 25px}
+.sim-profile-primary,.sim-profile-action{width:100%;min-height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:11px;font-weight:750;transition:transform .16s,background .16s,border-color .16s}
+.sim-profile-primary{background:#416c4a;color:white;box-shadow:0 5px 14px #416c4a2b}
+.sim-profile-primary:hover{background:#345d3d;transform:translateY(-1px)}
+.sim-profile-action{background:#fff;border:1px solid #e4ebe1;color:#627b65}
+.sim-profile-action:hover{background:#f1f6ef;border-color:#cbdcc8}
+.sim-profile-section{margin-top:25px}
+.sim-profile-section-title{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+.sim-profile-section-title>span{width:25px;height:25px;border-radius:8px;display:grid;place-items:center;background:#eaf1e6;color:#73906f;font-size:9px;font-weight:850}
+.sim-profile-section-title h3{font-size:12px;font-weight:800;letter-spacing:-.1px;color:#3e5542;margin:0}
+.sim-profile-bio{font-size:11px;line-height:1.85;color:#78887a;margin:0;padding:13px 14px;background:#fff;border:1px solid #edf1eb;border-radius:12px}
+.sim-profile-memorial{margin-top:18px;border-radius:12px;padding:13px}
+.sim-profile-add{margin:0 0 12px;min-height:39px;border-radius:10px;font-size:10px}
+.sim-profile-relation{border:1px solid #e9eee7!important;border-radius:12px!important;background:#fff!important;padding:5px 7px!important;margin:7px 0!important}
+.sim-profile-relation .relation-person{background:transparent!important}
+.sim-profile-empty{font-size:10px;line-height:1.7;padding:13px 14px;background:#fff;border:1px dashed #dce6d9;border-radius:12px;color:#91a092}
+.sim-profile-gallery{padding-top:3px}
+.sim-profile-gallery .inspector-album{background:#fff;border:1px solid #e9eee7;border-radius:13px;padding:11px}
+@media(max-width:900px){.inspector.sim-profile-panel{width:290px;max-width:42vw}}
+@media(max-width:650px){.inspector.sim-profile-panel{position:absolute;z-index:35;right:0;top:0;bottom:0;width:min(360px,92vw);max-width:92vw;box-shadow:-18px 0 50px #263b2b24}}
