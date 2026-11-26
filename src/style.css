@@ -372,15 +372,20 @@
 @media(max-width:760px){.brand{width:150px;height:44px}}
 
 /* Full-screen family tree workspace */
-.tree-fullscreen{position:fixed!important;inset:0!important;z-index:1000!important;width:100vw!important;height:100dvh!important;min-height:0!important;background:#f8faf6!important}
-.tree-fullscreen .sidebar{height:100%;overflow:auto}
-.tree-fullscreen .editor-main{height:100%;min-height:0}
-.tree-fullscreen .canvas-area{flex:1;min-height:0}
+.tree-fullscreen{position:fixed!important;inset:18px!important;z-index:1000!important;width:auto!important;height:auto!important;min-height:0!important;background:#f8faf6!important;border:1px solid rgba(220,232,216,.9)!important;border-radius:28px!important;overflow:hidden!important;box-shadow:0 28px 100px rgba(25,43,30,.32),0 0 0 100vmax rgba(24,39,28,.42)!important}
+.tree-fullscreen .sidebar{height:100%;overflow:auto;border-radius:27px 0 0 27px}
+.tree-fullscreen .editor-main{height:100%;min-height:0;min-width:0;overflow:hidden;border-radius:0 27px 27px 0}
+.tree-fullscreen .canvas-area{flex:1;min-height:0;border-radius:0 0 26px 0}
 .tree-fullscreen-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex-shrink:0;padding:9px 12px;border:1px solid #dce8da;border-radius:11px;background:#f4f8f1;color:#456e4e;font-size:11px;font-weight:800;white-space:nowrap}
 .tree-fullscreen-toggle:hover{background:#eaf3e7;border-color:#bcd4bb}
 .dynasty-card-wrap{position:relative;min-width:0}
 .dynasty-card-wrap .gallery-card{width:100%;height:100%}
-.dynasty-cover-edit{position:absolute;right:13px;top:13px;z-index:3;display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1px solid #ffffffa8;border-radius:999px;background:#ffffffed;color:#426b4b;box-shadow:0 5px 18px #243c2a20;font-size:10px;font-weight:800;cursor:pointer;backdrop-filter:blur(10px)}
+.dynasty-cover-tools{position:absolute;right:12px;top:12px;z-index:4;display:flex;align-items:center;gap:7px;max-width:calc(100% - 24px)}
+.dynasty-cover-edit{position:relative;display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1px solid #ffffffa8;border-radius:999px;background:#ffffffed;color:#426b4b;box-shadow:0 5px 18px #243c2a20;font-size:10px;font-weight:800;cursor:pointer;backdrop-filter:blur(10px);white-space:nowrap}
 .dynasty-cover-edit:hover{background:#fff;transform:translateY(-1px)}
 .dynasty-cover-edit input{display:none}
+.dynasty-cover-person{max-width:150px;min-width:105px;padding:9px 28px 9px 11px;border:1px solid #ffffffa8;border-radius:999px;background:#ffffffed;color:#426b4b;box-shadow:0 5px 18px #243c2a20;font-size:10px;font-weight:800;outline:none;backdrop-filter:blur(10px)}
+.gallery-cover>img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block}
 @media(max-width:780px){.tree-fullscreen .sidebar{display:none}.tree-fullscreen .editor-main{width:100%}.tree-fullscreen .canvas-top{padding:10px 12px}.tree-fullscreen-toggle{padding:8px 10px}}
+
+@media(max-width:780px){.tree-fullscreen{inset:8px!important;border-radius:20px!important}.tree-fullscreen .sidebar{display:none}.tree-fullscreen .editor-main{width:100%;border-radius:20px!important}.tree-fullscreen .canvas-area{border-radius:0 0 19px 19px}.tree-fullscreen .canvas-top{padding:10px 12px}.tree-fullscreen-toggle{padding:8px 10px}.dynasty-cover-tools{left:9px;right:9px;top:9px;justify-content:flex-end}.dynasty-cover-edit{padding:8px 9px;font-size:9px}.dynasty-cover-person{max-width:125px;min-width:90px;padding:8px 22px 8px 8px;font-size:9px}}
