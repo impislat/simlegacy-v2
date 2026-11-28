@@ -83,14 +83,14 @@ export function RequisitesPage({onBack}){
  </main>
 }
 
-export default function LegalPage({onBack}){
+export default function LegalPage({onBack,onRequisites}){
  const [active,setActive]=useState('offer');
  const current=docs.find(x=>x.id===active)||docs[0];
  return <main className="legal-page">
   <div className="legal-top"><button className="legal-back" onClick={onBack}><ArrowLeft size={17}/> На главную</button><span className="legal-kicker">SIMLEGACY · ПРАВОВАЯ ИНФОРМАЦИЯ</span></div>
   <section className="legal-hero"><span className="legal-eyebrow">ПРОЗРАЧНОСТЬ И ДОВЕРИЕ</span><h1>Документы SimLegacy</h1><p>Правила сервиса, обработка данных и информация для пользователей.</p></section>
   <div className="legal-notice"><Info size={19}/><div><b>Предварительная редакция документов</b><p>Планируемая стоимость Pro — 199 ₽ за один месяц, без автоматического продления и списаний. Следующий месяц пользователь оплачивает самостоятельно. Платёжный функционал пока не подключён: до его запуска покупка Pro недоступна. Описание платных функций и ограничения тарифов должны быть реализованы в самом сервисе до начала приёма оплаты.</p></div></div>
-  <div className="legal-layout"><aside className="legal-nav"><div className="legal-nav-title">Документы</div>{docs.map(d=>{const Icon=d.icon;return <button key={d.id} className={active===d.id?'active':''} onClick={()=>setActive(d.id)}><Icon size={16}/><span>{d.title}</span></button>})}</aside>
+  <div className="legal-layout"><aside className="legal-nav"><div className="legal-nav-title">Документы</div><button className="legal-requisites-link" type="button" onClick={onRequisites}><Mail size={16}/><span>Реквизиты и контакты</span></button>{docs.map(d=>{const Icon=d.icon;return <button key={d.id} className={active===d.id?'active':''} onClick={()=>setActive(d.id)}><Icon size={16}/><span>{d.title}</span></button>})}</aside>
    <article className="legal-document"><div className="legal-doc-label">ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</div><h2>{current.title}</h2><p className="legal-updated">SimLegacy · редакция от 28 ноября 2026 года</p>{current.body.map(([heading,paragraph])=><section className="legal-clause" key={heading}><h3>{heading}</h3><p>{paragraph}</p></section>)}<div className="legal-doc-footer">Вопросы и обращения: <a href="mailto:david052402@mail.com">david052402@mail.com</a><br/><button className="legal-back" onClick={()=>onRequisites?.()}>Открыть отдельную страницу реквизитов</button></div></article>
   </div>
  </main>
