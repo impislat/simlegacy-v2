@@ -187,3 +187,36 @@ end;
 $$;
 drop trigger if exists simlegacy_plan_limits on public.trees;
 create trigger simlegacy_plan_limits before insert or update of chronicles on public.trees for each row execute function public.simlegacy_enforce_plan_limits();
+
+-- Extend Free/Pro enforcement to dynasty photo galleries (12 Free / 80 Pro).
+create or replace function public.simlegacy_enforce_plan_limits()
+returns trigger language plpgsql security definer set search_path=''
+as $$
+declare tree_count integer;
+begin
+ if tg_op='INSERT' then
+  perform pg_advisory_xact_lock(hashtextextended(new.owner_id::text,0));
+  if not private.simlegacy_has_active_pro(new.owner_id) then
+   select count(*) into tree_count from public.trees t where t.owner_id=new.owner_id;
+   if tree_count>=2 then
+    raise exception 'FREE_TREE_LIMIT: Бесплатный тариф позволяет создать не более 2 семейных древ. Перейдите на Pro, чтобы создавать без ограничений.' using errcode='P0001';
+   end if;
+   if jsonb_array_length(coalesce(new.gallery,'[]'::jsonb))>12 then
+    raise exception 'FREE_PHOTO_LIMIT: На бесплатном тарифе можно хранить до 12 фотографий в альбоме династии. Pro открывает до 80 фотографий.' using errcode='P0001';
+   end if;
+  end if;
+ elsif tg_op='UPDATE' then
+  if not private.simlegacy_has_active_pro(new.owner_id) then
+   if new.chronicles is distinct from old.chronicles then
+    raise exception 'PRO_CHRONICLES_REQUIRED: Хроники семьи доступны на тарифе Pro.' using errcode='P0001';
+   end if;
+   if new.gallery is distinct from old.gallery and jsonb_array_length(coalesce(new.gallery,'[]'::jsonb))>12 then
+    raise exception 'FREE_PHOTO_LIMIT: На бесплатном тарифе можно хранить до 12 фотографий в альбоме династии. Pro открывает до 80 фотографий.' using errcode='P0001';
+   end if;
+  end if;
+ end if;
+ return new;
+end;
+$$;
+drop trigger if exists simlegacy_plan_limits on public.trees;
+create trigger simlegacy_plan_limits before insert or update of chronicles,gallery on public.trees for each row execute function public.simlegacy_enforce_plan_limits();
