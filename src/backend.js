@@ -108,3 +108,11 @@ export async function toggleSimRepost(postId,user){const existing=fail(await db.
 
 export async function getSimActivity(userId){if(!userId)return [];return fail(await db.from('simstagram_activity').select('id,actor_id,actor_name,post_id,kind,preview,seen,created_at').eq('recipient_id',userId).order('created_at',{ascending:false}).limit(100))}
 export async function markSimActivitySeen(userId){fail(await db.from('simstagram_activity').update({seen:true}).eq('recipient_id',userId).eq('seen',false))}
+
+export async function getSubscription(userId){
+ if(!db||!userId)return {plan:'free',starts_at:null,expires_at:null,active:false};
+ const {data,error}=await db.from('subscriptions').select('plan,starts_at,expires_at').eq('user_id',userId).maybeSingle();
+ if(error)throw error;
+ const active=data?.plan==='pro'&&!!data.starts_at&&!!data.expires_at&&Date.parse(data.starts_at)<=Date.now()&&Date.parse(data.expires_at)>Date.now();
+ return {...(data||{plan:'free',starts_at:null,expires_at:null}),active};
+}
