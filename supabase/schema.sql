@@ -137,3 +137,53 @@ grant select on public.profiles to anon;
 grant select,insert,update on public.profiles to authenticated;
 grant select on public.tree_likes,public.tree_comments to anon;
 grant select,insert,delete on public.tree_likes,public.tree_comments to authenticated;
+
+-- Subscription entitlements: plan changes are written only by trusted payment webhooks/admin.
+create schema if not exists private;
+create table if not exists public.subscriptions (
+ user_id uuid primary key references auth.users(id) on delete cascade,
+ plan text not null default 'free' check (plan in ('free','pro')),
+ starts_at timestamptz, expires_at timestamptz,
+ source text not null default 'manual' check (source in ('manual','robokassa','yookassa','admin')),
+ updated_at timestamptz not null default now(),
+ constraint subscriptions_valid_period check (
+  (plan='free' and expires_at is null) or
+  (plan='pro' and starts_at is not null and expires_at is not null and expires_at>starts_at)
+ )
+);
+alter table public.subscriptions enable row level security;
+drop policy if exists "Read own subscription" on public.subscriptions;
+create policy "Read own subscription" on public.subscriptions for select to authenticated using ((select auth.uid())=user_id);
+revoke all on public.subscriptions from anon,authenticated;
+grant select on public.subscriptions to authenticated;
+
+create or replace function private.simlegacy_has_active_pro(p_user_id uuid)
+returns boolean language sql stable security definer set search_path=''
+as $$
+ select exists(select 1 from public.subscriptions s where s.user_id=p_user_id and s.plan='pro' and s.starts_at<=now() and s.expires_at>now());
+$$;
+revoke all on function private.simlegacy_has_active_pro(uuid) from public,anon,authenticated;
+
+create or replace function public.simlegacy_enforce_plan_limits()
+returns trigger language plpgsql security definer set search_path=''
+as $$
+declare tree_count integer;
+begin
+ if tg_op='INSERT' then
+  perform pg_advisory_xact_lock(hashtextextended(new.owner_id::text,0));
+  if not private.simlegacy_has_active_pro(new.owner_id) then
+   select count(*) into tree_count from public.trees t where t.owner_id=new.owner_id;
+   if tree_count>=2 then
+    raise exception 'FREE_TREE_LIMIT: Бесплатный тариф позволяет создать не более 2 семейных древ. Перейдите на Pro, чтобы создавать без ограничений.' using errcode='P0001';
+   end if;
+  end if;
+ elsif tg_op='UPDATE' then
+  if new.chronicles is distinct from old.chronicles and not private.simlegacy_has_active_pro(new.owner_id) then
+   raise exception 'PRO_CHRONICLES_REQUIRED: Хроники семьи доступны на тарифе Pro.' using errcode='P0001';
+  end if;
+ end if;
+ return new;
+end;
+$$;
+drop trigger if exists simlegacy_plan_limits on public.trees;
+create trigger simlegacy_plan_limits before insert or update of chronicles on public.trees for each row execute function public.simlegacy_enforce_plan_limits();
