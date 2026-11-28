@@ -407,3 +407,8 @@
 .pricing-duration-popular{border-color:#9ac19e;background:#f4faf2}
 .pricing-duration-best{border-color:#77ad84;background:#edf7ec}
 @media(max-width:440px){.pricing-duration-grid{gap:6px}.pricing-duration{padding:10px 7px}.pricing-duration strong{font-size:18px}.pricing-duration>span{font-size:9px}}
+
+.pricing-duration-grid .pricing-duration{font:inherit;text-align:left;cursor:pointer;transition:border-color .16s,background .16s,box-shadow .16s,transform .16s;width:100%;color:inherit}
+.pricing-duration-grid .pricing-duration:hover{transform:translateY(-2px);border-color:#79ad82;box-shadow:0 5px 14px #315d3518}
+.pricing-duration-grid .pricing-duration-selected{border:2px solid #43865b;background:#edf7ec;box-shadow:0 0 0 3px #43865b20}
+.pricing-duration-grid .pricing-duration:focus-visible{outline:3px solid #8dbb94;outline-offset:2px}
