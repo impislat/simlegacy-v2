@@ -3,6 +3,12 @@ import {ArrowLeft,ChevronDown,FileText,ShieldCheck,Wallet,Mail,Scale,Lock,Info} 
 import './legal.css';
 
 const docs=[
+ {id:'pricing',title:'Тарифы SimLegacy',icon:Wallet,body:[
+  ['Free — бесплатно','Базовый тариф для знакомства с SimLegacy и ведения семейных историй. Доступ к базовым функциям создания и редактирования династий. Точные лимиты Free будут отображаться в интерфейсе сервиса до их применения.'],
+  ['Pro — 199 ₽ за месяц','Планируемый тариф Pro расширяет возможности использования SimLegacy. Состав платных функций, доступные лимиты и срок доступа будут явно перечислены на странице оплаты до подключения тарифа. Не оплачивайте Pro, пока платежи на сайте не включены официально.'],
+  ['Оплата и продление','На текущий момент платёжный функционал не подключён. Подписка не продаётся, автоматические списания не выполняются. После запуска планируется месячный доступ за 199 ₽; условия продления и способ оплаты будут указаны до подтверждения платежа.'],
+  ['Важно','Тарифы и состав функций являются предварительными и могут измениться до запуска оплаты. Уже оплаченные периоды не будут изменяться задним числом.']
+ ]},
  {id:'offer',title:'Публичная оферта',icon:FileText,body:[
   ['1. Общие положения','Настоящий документ устанавливает условия предоставления доступа к цифровому онлайн-сервису SimLegacy. SimLegacy предназначен для создания и ведения виртуальных семейных древ, профилей персонажей, фотографий и хроник игровых династий. Исполнитель предоставляет пользователю доступ к функциональности сервиса через сеть Интернет.'],
   ['2. Исполнитель и заключение договора','Исполнитель: Курбанов Давид Тофикович, ИНН 890509490950, применяющий налог на профессиональный доход. Контактный адрес электронной почты: david052402@mail.com. Адрес для корреспонденции: Российская Федерация, Ямало-Ненецкий автономный округ, город Ноябрьск, улица Городилова, дом 4, квартира 53. Договор заключается после ознакомления пользователя с офертой и оплаты выбранного тарифа либо начала использования бесплатной версии сервиса.'],
@@ -67,7 +73,7 @@ export default function LegalPage({onBack}){
   <section className="legal-hero"><span className="legal-eyebrow">ПРОЗРАЧНОСТЬ И ДОВЕРИЕ</span><h1>Документы SimLegacy</h1><p>Правила сервиса, обработка данных и информация для пользователей.</p></section>
   <div className="legal-notice"><Info size={19}/><div><b>Предварительная редакция документов</b><p>Планируемая стоимость Pro — 199 ₽ за один месяц, без автоматического продления и списаний. Следующий месяц пользователь оплачивает самостоятельно. Платёжный функционал пока не подключён: до его запуска покупка Pro недоступна. Описание платных функций и ограничения тарифов должны быть реализованы в самом сервисе до начала приёма оплаты.</p></div></div>
   <div className="legal-layout"><aside className="legal-nav"><div className="legal-nav-title">Документы</div>{docs.map(d=>{const Icon=d.icon;return <button key={d.id} className={active===d.id?'active':''} onClick={()=>setActive(d.id)}><Icon size={16}/><span>{d.title}</span></button>})}</aside>
-   <article className="legal-document"><div className="legal-doc-label">ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</div><h2>{current.title}</h2><p className="legal-updated">SimLegacy · редакция от 25 ноября 2026 года</p>{current.body.map(([heading,paragraph])=><section className="legal-clause" key={heading}><h3>{heading}</h3><p>{paragraph}</p></section>)}<div className="legal-doc-footer">Вопросы и обращения: <a href="mailto:david052402@mail.com">david052402@mail.com</a></div></article>
+   <article className="legal-document"><div className="legal-doc-label">ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</div><h2>{current.title}</h2><p className="legal-updated">SimLegacy · редакция от 28 ноября 2026 года</p>{current.body.map(([heading,paragraph])=><section className="legal-clause" key={heading}><h3>{heading}</h3><p>{paragraph}</p></section>)}<div className="legal-doc-footer">Вопросы и обращения: <a href="mailto:david052402@mail.com">david052402@mail.com</a></div></article>
   </div>
  </main>
 }
