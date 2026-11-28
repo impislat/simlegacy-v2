@@ -65,6 +65,24 @@ const docs=[
  ]}
 ];
 
+export function RequisitesPage({onBack}){
+ return <main className="legal-page">
+  <div className="legal-top"><button className="legal-back" onClick={onBack}><ArrowLeft size={17}/> На главную</button><span className="legal-kicker">SIMLEGACY · РЕКВИЗИТЫ</span></div>
+  <section className="legal-hero"><span className="legal-eyebrow">ИНФОРМАЦИЯ О СЕРВИСЕ</span><h1>Реквизиты и контакты</h1><p>Сведения об исполнителе и способы связи по вопросам работы SimLegacy.</p></section>
+  <article className="legal-document" style={{maxWidth:860,margin:'0 auto'}}>
+   <div className="legal-doc-label">СВЕДЕНИЯ ОБ ИСПОЛНИТЕЛЕ</div>
+   <h2>SimLegacy</h2>
+   <section className="legal-clause"><h3>Исполнитель</h3><p>Курбанов Давид Тофикович</p></section>
+   <section className="legal-clause"><h3>ИНН</h3><p>890509490950</p></section>
+   <section className="legal-clause"><h3>Сайт</h3><p><a href="https://simlegacy.ru">https://simlegacy.ru</a></p></section>
+   <section className="legal-clause"><h3>Электронная почта</h3><p><a href="mailto:david052402@mail.com">david052402@mail.com</a> — поддержка, обращения и претензии.</p></section>
+   <section className="legal-clause"><h3>Телефон</h3><p>Отдельный телефон для связи на сайте не публикуется.</p></section>
+   <section className="legal-clause"><h3>Документы</h3><p>Публичная оферта и политика обработки персональных данных доступны в разделе правовой информации SimLegacy.</p></section>
+   <div className="legal-doc-footer">По всем вопросам можно написать на <a href="mailto:david052402@mail.com">david052402@mail.com</a>.</div>
+  </article>
+ </main>
+}
+
 export default function LegalPage({onBack}){
  const [active,setActive]=useState('offer');
  const current=docs.find(x=>x.id===active)||docs[0];
@@ -73,7 +91,7 @@ export default function LegalPage({onBack}){
   <section className="legal-hero"><span className="legal-eyebrow">ПРОЗРАЧНОСТЬ И ДОВЕРИЕ</span><h1>Документы SimLegacy</h1><p>Правила сервиса, обработка данных и информация для пользователей.</p></section>
   <div className="legal-notice"><Info size={19}/><div><b>Предварительная редакция документов</b><p>Планируемая стоимость Pro — 199 ₽ за один месяц, без автоматического продления и списаний. Следующий месяц пользователь оплачивает самостоятельно. Платёжный функционал пока не подключён: до его запуска покупка Pro недоступна. Описание платных функций и ограничения тарифов должны быть реализованы в самом сервисе до начала приёма оплаты.</p></div></div>
   <div className="legal-layout"><aside className="legal-nav"><div className="legal-nav-title">Документы</div>{docs.map(d=>{const Icon=d.icon;return <button key={d.id} className={active===d.id?'active':''} onClick={()=>setActive(d.id)}><Icon size={16}/><span>{d.title}</span></button>})}</aside>
-   <article className="legal-document"><div className="legal-doc-label">ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</div><h2>{current.title}</h2><p className="legal-updated">SimLegacy · редакция от 28 ноября 2026 года</p>{current.body.map(([heading,paragraph])=><section className="legal-clause" key={heading}><h3>{heading}</h3><p>{paragraph}</p></section>)}<div className="legal-doc-footer">Вопросы и обращения: <a href="mailto:david052402@mail.com">david052402@mail.com</a></div></article>
+   <article className="legal-document"><div className="legal-doc-label">ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</div><h2>{current.title}</h2><p className="legal-updated">SimLegacy · редакция от 28 ноября 2026 года</p>{current.body.map(([heading,paragraph])=><section className="legal-clause" key={heading}><h3>{heading}</h3><p>{paragraph}</p></section>)}<div className="legal-doc-footer">Вопросы и обращения: <a href="mailto:david052402@mail.com">david052402@mail.com</a><br/><button className="legal-back" onClick={()=>onRequisites?.()}>Открыть отдельную страницу реквизитов</button></div></article>
   </div>
  </main>
 }
